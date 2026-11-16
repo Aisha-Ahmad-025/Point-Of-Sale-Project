@@ -1,0 +1,24 @@
+{
+  "name": "swiftshelf-pos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SwiftShelf POS - Smart Mini Mart Point of Sale and Inventory Management (MERN)",
+  "workspaces": ["backend", "frontend"],
+  "scripts": {
+    "install:all": "npm install",
+    "dev": "concurrently -n api,web -c green,cyan \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
+    "build": "npm run build -w frontend",
+    "start": "npm run start -w backend",
+    "test": "npm run test -w backend && npm run test -w frontend",
+    "test:backend": "npm run test -w backend",
+    "test:frontend": "npm run test -w frontend",
+    "lint": "npm run lint -w backend && npm run lint -w frontend",
+    "seed": "npm run seed -w backend",
+    "seed:reset": "npm run seed:reset -w backend",
+    "create-admin": "npm run create-admin -w backend"
+  },
+  "devDependencies": { "concurrently": "^8.2.2" },
+  "engines": { "node": ">=18.18" }
+}
