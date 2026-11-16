@@ -14,17 +14,53 @@ async function detectTransactions() {
   return supported;
 }
 
+// async function connectDB(uri = config.mongoUri) {
+//   mongoose.set('strictQuery', true);
+//   await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000 });
+//   dbState.transactions = await detectTransactions();
+//   // eslint-disable-next-line no-console
+//   console.log(`[db] connected (${dbState.transactions ? 'transactions ON' : 'standalone: compensating fallback ON'})`);
+//   return mongoose.connection;
+// }
+
+// async function disconnectDB() {
+//   await mongoose.disconnect();
+// }
+
+
+let connectionPromise = null;
+
 async function connectDB(uri = config.mongoUri) {
   mongoose.set('strictQuery', true);
-  await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000 });
-  dbState.transactions = await detectTransactions();
-  // eslint-disable-next-line no-console
-  console.log(`[db] connected (${dbState.transactions ? 'transactions ON' : 'standalone: compensating fallback ON'})`);
-  return mongoose.connection;
+
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  if (!connectionPromise) {
+    connectionPromise = mongoose
+      .connect(uri, { serverSelectionTimeoutMS: 8000 })
+      .then(async () => {
+        dbState.transactions = await detectTransactions();
+
+        console.log(
+          `[db] connected (${dbState.transactions ? 'transactions ON' : 'standalone: compensating fallback ON'})`
+        );
+
+        return mongoose.connection;
+      })
+      .catch((error) => {
+        connectionPromise = null;
+        throw error;
+      });
+  }
+
+  return connectionPromise;
 }
 
 async function disconnectDB() {
   await mongoose.disconnect();
+  connectionPromise = null;
 }
 
 module.exports = { connectDB, disconnectDB, dbState };
