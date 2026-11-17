@@ -1,7 +1,14 @@
 
 [build]
-  command = "npm run build -w frontend"
+  command = "npm ci --prefix backend --omit=dev && npm ci --prefix frontend --include=dev && npm run build --prefix frontend"
   publish = "frontend/dist"
+
+[build.environment]
+  # NODE_ENV=production makes npm skip devDependencies (vite, tailwind, etc.).
+  # Force their installation without changing NODE_ENV, so the bundle stays a production build.
+  NPM_FLAGS = "--include=dev"
+  # Backend test-only dependency; skip downloading a MongoDB binary during deploys.
+  MONGOMS_DISABLE_POSTINSTALL = "1"
 
 [functions]
   directory = "backend/netlify/functions"
