@@ -15,6 +15,7 @@ http.interceptors.request.use((config) => {
 
 function normalize(err) {
   const body = err.response?.data?.error;
+  console.log('[API BASE URL]', http.defaults.baseURL);
   return { status: err.response?.status || 0, code: body?.code || (err.code === 'ECONNABORTED' ? 'TIMEOUT' : 'NETWORK_ERROR'), message: body?.message || err.message, details: body?.details };
 }
 

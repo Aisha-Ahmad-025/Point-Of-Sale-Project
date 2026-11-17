@@ -10,7 +10,7 @@ const sale = (over = {}) => ({ receiptNumber: 'SS-20261022-00007', createdAt: '2
 describe('PDF receipt', () => {
   test('produces a valid one-page PDF for a cash sale', async () => {
     const bytes = await buildReceiptPdf({ store, sale: sale(), fmt });
-    expect(Buffer.from(bytes.slice(0, 5)).toString()).toBe('%PDF-');
+    expect(new TextDecoder().decode(bytes.slice(0, 5))).toBe('%PDF-');
     const doc = await PDFDocument.load(bytes);
     expect(doc.getPageCount()).toBe(1);
     expect(doc.getTitle()).toBe('Receipt SS-20261022-00007');

@@ -1,3 +1,4 @@
+
 {
   "pos": {
     "products": "Products",
@@ -507,7 +508,7 @@
   },
   "whatsapp": {
     "share": "Share on WhatsApp",
-    "shareReceipt": "Send receipt as PDF",
+    "shareReceipt": "Share receipt PDF on WhatsApp",
     "title": "Send on WhatsApp",
     "number": "WhatsApp number",
     "numberHint": "Local numbers starting with 0 are converted using country code {{code}}.",
@@ -551,9 +552,6 @@
     "completeCredit": "Complete credit sale",
     "cashNow": "Cash now",
     "inactive": "This customer is inactive"
-  },
-  "validation": {
-    "phone": "Enter a valid phone number"
   },
   "dock": {
     "pin": "Pin menu open",
