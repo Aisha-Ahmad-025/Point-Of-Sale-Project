@@ -58,7 +58,7 @@ Key design decisions
 ## Project structure
 ```
 SwiftShelf-POS-MERN/
-├─ package.json            npm workspaces + root scripts
+├─ package.json            root scripts (installs backend + frontend via postinstall)
 ├─ README.md  docs/        PROJECT_OVERVIEW, DATABASE_DESIGN, API_DOCUMENTATION, TESTING
 ├─ backend/
 │  ├─ .env.example
@@ -122,7 +122,7 @@ Frontend: `VITE_API_BASE_URL=http://localhost:5000/api/v1`. No third-party API k
 
 ```bash
 # from the project root
-npm install                 # installs root + backend + frontend (npm workspaces)
+npm install                 # installs root + backend + frontend (via postinstall)
 npm run seed                # seeds an EMPTY dev database (see safety rules below)
 npm run dev                 # API on :5000 and web app on :5173 concurrently
 ```
